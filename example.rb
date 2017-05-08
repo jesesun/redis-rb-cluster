@@ -2,8 +2,9 @@ require './cluster'
 
 if ARGV.length != 2
     startup_nodes = [
-        {:host => "127.0.0.1", :port => 6379},
-        {:host => "127.0.0.1", :port => 6380}
+        {:host => "10.0.2.4", :port => 7000},
+        {:host => "10.0.2.5", :port => 7000},
+        {:host => "10.0.2.6", :port => 7000}
     ]
 else
     startup_nodes = [

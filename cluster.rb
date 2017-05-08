@@ -130,6 +130,14 @@ class RedisCluster
         case argv[0].to_s.downcase
         when "info","multi","exec","slaveof","config","shutdown"
             return nil
+	when "call"
+		if argv[1][0].to_s.downcase === "eval"
+			puts  "call eval " << argv[1][0].to_s.downcase
+			return argv[1][3]
+		else
+			puts  "call non eval " << argv[1][0].to_s.downcase
+			return argv[1][1]
+		end
         else
             # Unknown commands, and all the commands having the key
             # as first argument are handled here:
@@ -226,6 +234,7 @@ class RedisCluster
         while ttl > 0
             ttl -= 1
             key = get_key_from_command(argv)
+	    #puts key
             raise "No way to dispatch this command to Redis Cluster." if !key
             slot = keyslot(key)
             if try_random_node
